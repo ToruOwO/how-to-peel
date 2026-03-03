@@ -1,8 +1,8 @@
 # 🔪 How to Peel with a Knife: Aligning Fine-Grained Manipulation with Human Preference
 
 [[Project](https://toruowo.github.io/peel/)]
-[[arXiv](https://arxiv.org/abs/2404.16823)]
-[[Video](https://arxiv.org/abs/2404.16823)]
+[[arXiv]()]
+[[Video](https://youtu.be/TBJr34EYYGA?si=QTRDsrCtwZ5Uazka)]
 
 [Toru Lin*](https://toruowo.github.io/),
 [Shuying Deng*](https://shuyingdeng.github.io/),
