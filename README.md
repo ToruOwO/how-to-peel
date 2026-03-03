@@ -38,7 +38,7 @@ This code base is tailored to a hardware setup with:
 - PyTorch
 - Python libraries for Kinova Gen3 arm, RealSense cameras, and SpaceMouse
 
-## Datasets [COMING SOON]
+## Datasets
 
 [[Data Files](https://www.dropbox.com/scl/fo/3kcq7kreifmpgbdsjma1s/APeYN8EOhRYcSvAO0w0ajl4?rlkey=pxgmd6ur81v6wj2urdod3ld82&dl=0)]
 
