@@ -40,7 +40,7 @@ This code base is tailored to a hardware setup with:
 
 ## Datasets [COMING SOON]
 
-[[Data Files]()]
+[[Data Files](https://www.dropbox.com/scl/fo/3kcq7kreifmpgbdsjma1s/APeYN8EOhRYcSvAO0w0ajl4?rlkey=pxgmd6ur81v6wj2urdod3ld82&dl=0)]
 
 The linked data folder contains datasets for the three produce types featured in our paper: `apple`, `potato`, and `cucumber`.
 
