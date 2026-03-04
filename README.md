@@ -1,8 +1,8 @@
 # 🔪 How to Peel with a Knife: Aligning Fine-Grained Manipulation with Human Preference
 
 [[Project](https://toruowo.github.io/peel/)]
-[[arXiv](https://arxiv.org/abs/2404.16823)]
-[[Video](https://arxiv.org/abs/2404.16823)]
+[[arXiv](https://arxiv.org/abs/2603.03280)]
+[[Video](https://youtu.be/TBJr34EYYGA?si=BpFeM2x4n4Le6hA-)]
 
 [Toru Lin*](https://toruowo.github.io/),
 [Shuying Deng*](https://shuyingdeng.github.io/),
@@ -125,7 +125,7 @@ If you find our paper or this codebase helpful in your research, please consider
 @article{lin2026how,
     author={Lin, Toru and Deng, Shuying and Yin, Zhao-Heng and Abbeel, Pieter and Malik, Jitendra},
     title={How to Peel with a Knife: Aligning Fine-Grained Manipulation with Human Preference},
-    journal={arXiv:xxxx.xxxxx},
+    journal={arXiv:2603.03280},
     year={2026}
 }
 ```
