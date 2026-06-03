@@ -1,0 +1,37 @@
+# Reward model training config — apple task
+
+# ── Data ──────────────────────────────────────────────────────
+dataset_path: []                     # raw dataset roots; only used when use_memmap=false
+use_memmap: true
+memmap_dir: "/path/to/memmap_apple"  # pre-built memmap directory
+
+fruit: "apple"
+reward_alpha: 0.85
+
+# ── Diffusion encoder ─────────────────────────────────────────
+dp_ckpt: "/path/to/dp_encoder_ckpt"  # base diffusion policy checkpoint
+
+obs_dim: 192
+act_dim: 6
+hidden_dim: 256
+num_layers: 3
+
+# ── Training ──────────────────────────────────────────────────
+device: "cuda:0"
+seed: 0
+batch_size: 256
+epochs: 50
+lr: 0.001
+weight_decay: 0.0001
+valid_ratio: 0.0
+norm_target: true
+
+# ── Logging ───────────────────────────────────────────────────
+entity: ""                           # wandb entity (leave empty for default)
+project: "reward-model"
+run_name: "rm_apple"
+save_dir: "./reward_model_ckpts"
+log_every: 100
+eval_every: 100
+watch_model: false
+max_grad_norm: 1.0

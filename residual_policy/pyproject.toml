@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "residual_policy"
+version = "0.1.0"
+description = "Residual Policy Fine-tuning for Diffusion Policies"
+readme = "README.md"
+requires-python = ">=3.9"
+
+dependencies = [
+    "torch",
+    "numpy",
+    "pyrallis",
+    "wandb",
+    "opencv-python",
+    "tqdm",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["residual_policy*"]
+exclude = ["configs*", "outputs*", "checkpoints*", "data*", "tests*"]
+
+[tool.setuptools]
+include-package-data = true

@@ -1,0 +1,9 @@
+torch
+numpy
+pyrallis
+wandb
+opencv-python
+tqdm
+
+# Note: `diffusion_policy` (providing build_diffusion_model_from_ckpt) is your own
+# diffusion policy implementation and must be installed separately.

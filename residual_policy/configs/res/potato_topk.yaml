@@ -1,0 +1,40 @@
+mode: topk
+experiment_name: potato_topk
+
+# ── Data ──────────────────────────────────────────────────────
+dataset_path: []
+memmap_dir: "/path/to/memmap_potato"
+use_memmap: true
+fruit: potato
+reward_alpha: 0.75
+
+# ── Diffusion policy checkpoint ───────────────────────────────
+dp_ckpt: "/path/to/dp_ckpt"
+
+# ── Architecture ──────────────────────────────────────────────
+obs_dim: 192
+act_dim: 6
+reward_feat_dim: 16
+reward_model_ckpt: "/path/to/reward_model_ckpt"
+
+# ── TopK filtering ────────────────────────────────────────────
+top_rate: 0.5
+
+# ── Training ──────────────────────────────────────────────────
+device: cuda:0
+seed: 0
+batch_size: 256
+lr: 0.0001
+epochs: 100
+lam: 0.7
+beta: 2.5
+delta_norm_max: 1.5
+max_grad_norm: 1.0
+
+# ── Logging ───────────────────────────────────────────────────
+entity: ""
+project: residual-dp
+run_name: potato_topk
+save_dir: ./checkpoints
+log_every: 100
+watch_model: false

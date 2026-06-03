@@ -103,11 +103,95 @@ Arguments for policy deployment:
 - `--ckpt-dir`: checkpoint path for policy to be deployed
 - `--ema`: deploy policy trained with EMA
 
-## Finetuning [COMING SOON]
+## Finetuning
+
+Finetune a pretrained diffusion policy with a lightweight **residual head** that
+nudges the base action toward higher-reward behavior, where the reward is learned
+from human annotations. The pipeline has two stages:
+
+1. **Learn a reward model** that scores `(observation, action)` pairs, supervised
+   by human preference labels.
+2. **Finetune the base policy** by training a residual head against that reward
+   model, keeping the base diffusion policy frozen.
+
+The final action is `a = a_base + lam * delta`, where `a_base` is sampled from the
+frozen base policy and `delta` is produced by the residual head.
+
+### Setup
+
+```bash
+cd residual_policy
+pip install -r requirements.txt
+```
+
+> `build_diffusion_model_from_ckpt` is imported from `diffusion_policy.export`,
+> which is your own base diffusion policy implementation. Install it separately
+> and adjust the import in `reward_model.py` / `res_policy.py` if your API differs.
+
+Demonstrations and their human labels are first cached into a memmap dataset for
+fast loading:
+
+```bash
+python -m residual_policy.dataset.build_cache  # edit roots / label_csv / out_dir first
+```
 
 ### learning a reward model from human preference
 
+Each demonstration carries human annotations — a per-segment local score
+and a global score for the whole episode. These are mapped to a scalar reward by
+the reward tables in `residual_policy/utils/reward_utils.py` (graded by default,
+or binary via `binary_reward: true`). The reward model is an MLP that regresses
+this reward from the frozen DP encoder embedding and the action.
+
+```bash
+python -m residual_policy.reward_model --config_path configs/reward/apple.yaml
+```
+
+Key fields in `configs/reward/*.yaml`:
+
+| field | meaning |
+|-------|---------|
+| `dp_ckpt` | base diffusion policy checkpoint (its encoder is used, frozen) |
+| `memmap_dir` | pre-built memmap dataset directory |
+| `fruit` | task name (`apple` / `potato`) selecting the reward table |
+| `binary_reward` | use binary (0/1) reward instead of graded |
+| `norm_target` | z-score normalize the regression target |
+
+Checkpoints are written to `save_dir`; use the best one as `reward_model_ckpt`
+in the next stage. Validation logs Pearson / Spearman correlation and pairwise
+ranking accuracy against the human reward.
+
 ### finetuning base policy with a reward model
+
+The residual head is trained with behavior cloning weighted by the learned
+reward. Three modes are available via `mode` in the config:
+
+- **`reward`** — reward-conditioned residual; the reward model's features are
+  projected and concatenated to the input of the residual head.
+- **`advantage`** — advantage-weighted BC, weighting each frame by its
+  per-trajectory advantage `r_t - mean(r_τ)`.
+- **`topk`** — top-K filtered BC, keeping only frames whose reward exceeds the
+  `top_rate` quantile.
+
+```bash
+python -m residual_policy.res_policy --config_path configs/res/apple_reward.yaml
+```
+
+Key fields in `configs/res/*.yaml`:
+
+| field | meaning |
+|-------|---------|
+| `mode` | `reward` / `advantage` / `topk` |
+| `dp_ckpt` | base diffusion policy checkpoint to finetune |
+| `reward_model_ckpt` | reward model trained in the previous stage |
+| `memmap_dir` | pre-built memmap dataset directory |
+| `lam` | residual blend: `a = a_base + lam * delta` |
+| `beta` | temperature for exponential reward/advantage weighting |
+| `delta_norm_max` | max L2 norm of the residual action |
+
+Checkpoints (residual head + reward feature projector) are saved per epoch under
+`save_dir`, with a `final.pt` at the end.
+
 
 ## Acknowledgement
 
