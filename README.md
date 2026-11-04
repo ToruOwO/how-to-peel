@@ -17,8 +17,8 @@ This repo contains code, datasets, and instructions to support the following use
 - teleoperating a Kinova Gen3 arm with impedance control with SpaceMouse, keyboard, or heuristic-based planner
 - collecting multimodal demonstration data
 - training peeling policies
-- learning a reward model from human preference (coming soon)
-- finetuning Diffusion Policies with a learned reward model (coming soon)
+- learning a reward model from human preference
+- finetuning Diffusion Policies with a learned reward model
 - deploying policies to real robot hardware
 
 ## Dependencies
